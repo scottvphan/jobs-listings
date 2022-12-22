@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap");
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-ptimary: hsl(180, 29%, 50%);
+  --color-background: hsl(180, 52%, 96%);
+  --color-tablet: hsl(180, 31%, 95%);
+  --color-dark-cyan: hsl(180, 8%, 52%);
+  --color-gray-cyan: hsl(180, 14%, 20%);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "League Spartan", sans-serif;
+  font-size: 1.5rem;
+  background-color: var(--color-background);
+}
+
+.header {
+  height: 25vh;
+  background-image: url(images/bg-header-mobile.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: var(--color-ptimary);
+  background-size: cover;
+  margin-bottom: 8rem;
+  position: relative;
+}
+
+.filters {
+  width: 90%;
+  min-height: 12vh;
+  background-color: white;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2rem 4rem 2rem 4.1rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  display: none;
+  overflow: hidden;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+}
+
+.filter span {
+  background-color: var(--color-tablet);
+  color: var(--color-ptimary);
+  padding: 0.5rem;
+}
+
+.filter img {
+  background-color: var(--color-ptimary);
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.clear {
+  position: absolute;
+  right: 1.5rem;
+  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.about-job {
+  border-bottom: 1px solid var(--color-ptimary);
+}
+
+.jobs {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.job {
+  background-color: #fff;
+  padding: 2.5rem 2rem;
+  border-left: 0.5rem solid var(--color-ptimary);
+  position: relative;
+  box-shadow: 5px 5px 10px 5px hsla(180, 29%, 50%, 0.2);
+  border-radius: 0.5rem;
+  margin-bottom: 4.6rem;
+}
+
+.company-img {
+  position: absolute;
+  width: 5rem;
+  top: -3rem;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.company-name {
+  display: flex;
+  margin-top: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.company-name h3 {
+  color: var(--color-ptimary);
+  margin-right: 2rem;
+  font-size: inherit;
+}
+
+.new {
+  color: #fff;
+  background-color: var(--color-ptimary);
+  padding: 0.2rem 1rem;
+  border-radius: 1rem;
+}
+
+.featured {
+  color: #fff;
+  background-color: #000;
+  padding: 0.2rem 1rem;
+  border-radius: 1rem;
+}
+
+.new {
+  margin-right: 1rem;
+}
+
+.role {
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.timing {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 1.8rem;
+}
+
+.timing span {
+  color: var(--color-dark-cyan);
+}
+
+.job-tags {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+
+.job-tags .tag {
+  background-color: var(--color-ptimary);
+  color: var(--color-ptimary);
+  padding: 0.5rem 0.9rem;
+  font-weight: bold;
+  background-color: var(--color-tablet);
+  border-radius: 0.3rem;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.filters.active {
+  display: flex;
+}
+
+/* active classes */
+.remove:hover {
+  background-color: black;
+}
+
+.clear:hover {
+  text-decoration: underline;
+  color: var(--color-ptimary);
+}
+
+.job-tags .tag:hover {
+  background-color: var(--color-ptimary);
+  color: #fff;
+}
+
+.role:hover {
+  color: var(--color-ptimary);
+}
+
+/* end of active classes */
+
+.remove {
+  border-radius: 0 0.4rem 0.4rem 0;
+}
+
+/* desktop design */
+@media (min-width: 800px) {
+  .header {
+    background-image: url("./images/bg-header-desktop.svg");
+    height: 20vh;
+  }
+
+  .jobs {
+    width: 82%;
+  }
+
+  .about-job {
+    border-bottom: 0;
+  }
+
+  .job {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 5px 10px 5px hsla(180, 29%, 50%, 0.2);
+    padding: 2.5rem 4rem 3rem 14rem;
+  }
+
+  .company-img {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8.5rem;
+    left: 3.6rem;
+  }
+
+  .company-name h3 {
+    font-size: 1.8rem;
+  }
+
+  .role {
+    font-size: 2.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .timing {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+  }
+
+  .new,
+  .featured {
+    font-size: 1.4rem;
+    border-radius: 1.5rem;
+    padding-top: 0.4rem;
+  }
+
+  .job-tags {
+    margin-top: 0;
+  }
+
+  .filters {
+    width: 82%;
+    padding: 2rem 4rem;
+    min-height: 9vh;
+    border-radius: 0.4rem;
+  }
+
+  .filter span {
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+  }
+
+  .remove {
+    width: 2.8rem;
+  }
+
+  .clear {
+    right: 5rem;
+  }
+}
