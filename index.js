@@ -1,12 +1,13 @@
 const jobs = document.querySelector(".jobs");
 const filters = document.querySelector(".filters");
 let jobArray = [];
-let retake = [];
+let spread = [];
+let filtersArray = [];
 
 const getJsonData = async function () {
   const response = await fetch("./data.json");
   jobArray = await response.json();
-  retake = [...jobArray];
+  spread = [...jobArray];
   populateDOM(jobArray);
 
 };
@@ -15,7 +16,7 @@ getJsonData();
 
 function addToDom(array) {
   array.forEach((item) => {
-    const jobEL = `<div class="job" id=${item.id}>
+    const jobElement = `<div class="job" id=${item.id}>
         <div class="about-job">
           <img src=${item.logo} class="company-img" alt="" />
           <div class="company-name company-name-${item.id}">
@@ -34,7 +35,7 @@ function addToDom(array) {
         <span class="tag">${item.level}</span>
         </div>
       </div>`;
-    jobs.insertAdjacentHTML("beforeend", jobEL);
+    jobs.insertAdjacentHTML("beforeend", jobElement);
   });
 }
 
@@ -42,12 +43,12 @@ function addNewFeatured(array) {
   array.forEach((item) => {
     const companyName = document.querySelector(`.company-name-${item.id}`);
     if (item.new) {
-      const newEl = `<span class="new">NEW</span>`;
-      companyName.insertAdjacentHTML("beforeend", newEl);
+      const newElement = `<span class="new">NEW</span>`;
+      companyName.insertAdjacentHTML("beforeend", newElement);
     }
     if (item.featured) {
-      const featuredEl = `<span class="featured">FEATURED</span>`;
-      companyName.insertAdjacentHTML("beforeend", featuredEl);
+      const featuredElement = `<span class="featured">FEATURED</span>`;
+      companyName.insertAdjacentHTML("beforeend", featuredElement);
     }
   });
 }
@@ -69,15 +70,6 @@ function populateDOM(array) {
   addTags(array);
 }
 
-function addToFiltersDOM(text) {
-  const filterEl = `<div class="filter">
-    <span>${text}</span>
-    <img src="images/icon-remove.svg" class="remove" alt="" />
-  </div>`;
-  filters.insertAdjacentHTML("beforeend", filterEl);
-}
-
-// filtering the jobArray values
 function filter(text) {
   jobArray = jobArray.filter((item) => {
     if (
@@ -92,17 +84,30 @@ function filter(text) {
 
 function updateDOM() {
   jobs.innerHTML = "";
-  const filterChildEl = filters.querySelectorAll(".filter");
-  [...filterChildEl].forEach((item) => {
+  const filterChildElement = filters.querySelectorAll(".filter");
+  [...filterChildElement].forEach((item) => {
     filter(item.children[0].textContent);
   });
+}
+
+function addToFiltersDOM(text) {
+  const filterElement = `<div class="filter">
+    <span>${text}</span>
+    <img src="images/icon-remove.svg" class="remove" alt="" />
+  </div>`;
+  filters.insertAdjacentHTML("beforeend", filterElement);
 }
 
 jobs.addEventListener("click", (e) => {
   const target = e.target;
   if (target.classList.contains("tag")) {
     filters.classList.add("active");
-    addToFiltersDOM(target.textContent);
+    target.classList.add("added")
+    if (!filtersArray.includes(target.textContent)){
+      addToFiltersDOM(target.textContent);
+      filtersArray.push(target.textContent);
+      console.log(filtersArray);
+    }
     updateDOM();
   }
 });
@@ -112,14 +117,16 @@ filters.addEventListener("click", (e) => {
   if (target.classList.contains("remove")) {
     target.parentElement.remove();
     if (filters.childElementCount > 1) {
-      jobArray = [...retake];
-      const filterChildEl = filters.querySelectorAll(".filter");
-      [...filterChildEl].forEach((item) => {
+      jobArray = [...spread];
+      filtersArray = []
+      const filterChildElement = filters.querySelectorAll(".filter");
+      [...filterChildElement].forEach((item) => {
         filter(item.children[0].textContent);
       });
     } else {
       filters.classList.remove("active");
       jobs.innerHTML = "";
+      filtersArray = []
       getJsonData();
     }
   } else if (target.classList.contains("clear")) {
@@ -127,6 +134,7 @@ filters.addEventListener("click", (e) => {
     [...filterChilds].forEach((item) => item.remove());
     filters.classList.remove("active");
     jobs.innerHTML = "";
+    filtersArray = []
     getJsonData();
   }
 });
