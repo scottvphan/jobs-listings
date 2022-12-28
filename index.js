@@ -138,3 +138,4 @@ filters.addEventListener("click", (e) => {
     getJsonData();
   }
 });
+
