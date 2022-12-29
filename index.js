@@ -2,10 +2,11 @@ const jobs = document.querySelector(".jobs");
 const filters = document.querySelector(".filters");
 const searchBar = document.getElementById("search-bar")
 const submitBtn = document.getElementById("submit-btn")
+const body = document.body
 let jobArray = [];
 let spread = [];
 let filtersArray = [];
-
+let searched = 0
 const getJsonData = async function () {
   const response = await fetch("./data.json");
   jobArray = await response.json();
@@ -57,11 +58,11 @@ function addNewFeatured(array) {
 
 function addTags(array) {
   array.forEach((item) => {
-    const tagsEl = document.querySelector(`.job-tags-${item.id}`);
+    const tagsElement = document.querySelector(`.job-tags-${item.id}`);
     const childTag = [...item.languages, ...item.tools];
     for (let i = 0; i < childTag.length; i++) {
-      const tagEl = ` <span class="tag">${childTag[i]}</span>`;
-      tagsEl.insertAdjacentHTML("beforeend", tagEl);
+      const tagElement = ` <span class="tag">${childTag[i]}</span>`;
+      tagsElement.insertAdjacentHTML("beforeend", tagElement);
     }
   });
 }
@@ -108,40 +109,46 @@ jobs.addEventListener("click", (e) => {
       addToFiltersDOM(target.textContent);
       filtersArray.push(target.textContent.toUpperCase());
       console.log(filtersArray);
+      searched++
     }
     updateDOM();
   }
 });
-
+body.addEventListener('click', ()=> console.log(searched))
 filters.addEventListener("click", (e) => {
   const target = e.target;
+  console.log(searched)
   if (target.classList.contains("remove")) {
     target.parentElement.remove();
+    searched--
     if (filters.childElementCount > 1) {
       jobArray = [...spread];
-      filtersArray = []
       const filterChildElement = filters.querySelectorAll(".filter");
       [...filterChildElement].forEach((item) => {
         filter(item.children[0].textContent);
+        
       });
-      updateDOM();
-      getJsonData()
-    } else {
-      filters.classList.remove("active");
-      jobs.innerHTML = "";
       filtersArray = []
-      getJsonData();
       updateDOM();
-      searchBar.value = ""
+      if(searched === 0){
+        getJsonData()
+      }
+    } 
+    else {
+      filtersArray = []
+      updateDOM();
+      getJsonData();
+      
     }
-  } else if (target.classList.contains("clear")) {
+   } 
+  else if (target.classList.contains("clear")) {
       const filterChilds = filters.querySelectorAll(".filter");
       [...filterChilds].forEach((item) => item.remove());
       jobs.innerHTML = "";
       filtersArray = []
       getJsonData();
-      updateDOM();
       searchBar.value = ""
+      searched = 0
   }
 });
 
@@ -182,18 +189,22 @@ submitBtn.addEventListener("click", (e)=>{
             ){
               addToFiltersDOM(capitalize(searchString))
               updateDOM();
+              searched++
             }
           else if(searchStringCheck === "html" || searchStringCheck === "css"){
             addToFiltersDOM(searchString.toUpperCase())
             updateDOM();
+            searched++
           }
           else if(searchStringCheck === "javascript"){
             addToFiltersDOM("JavaScript")
             updateDOM();
+            searched++
           }
           else if(searchStringCheck === "ror"){
             addToFiltersDOM("RoR")
             updateDOM();
+            searched++
           }
         }
         searchBar.value = ""
