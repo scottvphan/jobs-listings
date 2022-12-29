@@ -9,7 +9,7 @@
 }
 
 :root {
-  --color-ptimary: hsl(180, 29%, 50%);
+  --color-primary: hsl(180, 29%, 50%);
   --color-background: hsl(180, 52%, 96%);
   --color-tablet: hsl(180, 31%, 95%);
   --color-dark-cyan: hsl(180, 8%, 52%);
@@ -31,7 +31,7 @@ body {
   background-image: url(images/bg-header-mobile.svg);
   background-repeat: no-repeat;
   background-position: center center;
-  background-color: var(--color-ptimary);
+  background-color: var(--color-primary);
   background-size: cover;
   margin-bottom: 8rem;
   position: relative;
@@ -48,7 +48,7 @@ body {
   padding: 2rem 4rem 2rem 4.1rem;
   flex-wrap: wrap;
   gap: 1.5rem;
-  display: none;
+  display:flex;
   overflow: hidden;
 }
 
@@ -59,12 +59,12 @@ body {
 
 .filter span {
   background-color: var(--color-tablet);
-  color: var(--color-ptimary);
+  color: var(--color-primary);
   padding: 0.5rem;
 }
 
 .filter img {
-  background-color: var(--color-ptimary);
+  background-color: var(--color-primary);
   padding: 0.6rem;
   cursor: pointer;
 }
@@ -78,7 +78,7 @@ body {
 }
 
 .about-job {
-  border-bottom: 1px solid var(--color-ptimary);
+  border-bottom: 1px solid var(--color-primary);
 }
 
 .jobs {
@@ -89,7 +89,7 @@ body {
 .job {
   background-color: #fff;
   padding: 2.5rem 2rem;
-  border-left: 0.5rem solid var(--color-ptimary);
+  border-left: 0.5rem solid var(--color-primary);
   position: relative;
   box-shadow: 5px 5px 10px 5px hsla(180, 29%, 50%, 0.2);
   border-radius: 0.5rem;
@@ -112,14 +112,14 @@ body {
 }
 
 .company-name h3 {
-  color: var(--color-ptimary);
+  color: var(--color-primary);
   margin-right: 2rem;
   font-size: inherit;
 }
 
 .new {
   color: #fff;
-  background-color: var(--color-ptimary);
+  background-color: var(--color-primary);
   padding: 0.2rem 1rem;
   border-radius: 1rem;
 }
@@ -161,8 +161,8 @@ body {
 }
 
 .job-tags .tag {
-  background-color: var(--color-ptimary);
-  color: var(--color-ptimary);
+  background-color: var(--color-primary);
+  color: var(--color-primary);
   padding: 0.5rem 0.9rem;
   font-weight: bold;
   background-color: var(--color-tablet);
@@ -175,32 +175,29 @@ body {
   display: flex;
 }
 
-/* active classes */
 .remove:hover {
   background-color: black;
 }
 
 .clear:hover {
   text-decoration: underline;
-  color: var(--color-ptimary);
+  color: var(--color-primary);
 }
 
 .job-tags .tag:hover {
-  background-color: var(--color-ptimary);
+  background-color: var(--color-primary);
   color: #fff;
 }
 
 .role:hover {
-  color: var(--color-ptimary);
+  color: var(--color-primary);
 }
 
-/* end of active classes */
 
 .remove {
   border-radius: 0 0.4rem 0.4rem 0;
 }
 
-/* desktop design */
 @media (min-width: 800px) {
   .header {
     background-image: url("./images/bg-header-desktop.svg");
@@ -275,4 +272,26 @@ body {
   .clear {
     right: 5rem;
   }
+}
+.search-bar{
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
+.search-bar:active, .search-bar::selection, .search-bar:focus {
+  border:none;
+  outline: none;
+}
+.submit-btn{
+  color:var(--color-primary);;
+  font-weight:700;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  background-color: var(--color-tablet);
+}
+.submit-btn:hover{
+  color:white;
+  background-color:var(--color-primary);
 }
