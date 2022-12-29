@@ -1,5 +1,7 @@
 const jobs = document.querySelector(".jobs");
 const filters = document.querySelector(".filters");
+const searchBar = document.getElementById("search-bar")
+const submitBtn = document.getElementById("submit-btn")
 let jobArray = [];
 let spread = [];
 let filtersArray = [];
@@ -102,10 +104,9 @@ jobs.addEventListener("click", (e) => {
   const target = e.target;
   if (target.classList.contains("tag")) {
     filters.classList.add("active");
-    target.classList.add("added")
-    if (!filtersArray.includes(target.textContent)){
+    if (!filtersArray.includes(target.textContent.toUpperCase())){
       addToFiltersDOM(target.textContent);
-      filtersArray.push(target.textContent);
+      filtersArray.push(target.textContent.toUpperCase());
       console.log(filtersArray);
     }
     updateDOM();
@@ -123,19 +124,84 @@ filters.addEventListener("click", (e) => {
       [...filterChildElement].forEach((item) => {
         filter(item.children[0].textContent);
       });
+      updateDOM();
+      getJsonData()
     } else {
       filters.classList.remove("active");
       jobs.innerHTML = "";
       filtersArray = []
       getJsonData();
+      updateDOM();
+      searchBar.value = ""
     }
   } else if (target.classList.contains("clear")) {
-    const filterChilds = filters.querySelectorAll(".filter");
-    [...filterChilds].forEach((item) => item.remove());
-    filters.classList.remove("active");
-    jobs.innerHTML = "";
-    filtersArray = []
-    getJsonData();
+      const filterChilds = filters.querySelectorAll(".filter");
+      [...filterChilds].forEach((item) => item.remove());
+      jobs.innerHTML = "";
+      filtersArray = []
+      getJsonData();
+      updateDOM();
+      searchBar.value = ""
   }
 });
 
+submitBtn.addEventListener("click", (e)=>{
+  e.preventDefault()
+  let searchStringCheck = searchBar.value.toLowerCase()
+  if (searchStringCheck === "frontend" || 
+      searchStringCheck === "backend" ||
+      searchStringCheck === "react" ||
+      searchStringCheck === "javascript" || 
+      searchStringCheck === "html" ||
+      searchStringCheck === "css" ||
+      searchStringCheck === "python" ||
+      searchStringCheck === "fullstack" ||
+      searchStringCheck === "junior" ||
+      searchStringCheck === "senior" || 
+      searchStringCheck === "sass" ||
+      searchStringCheck === "ruby" ||
+      searchStringCheck === "ror" ||
+      searchStringCheck === "vue" ||
+      searchStringCheck === "django" ||
+      searchStringCheck === "midweight"){
+        let searchString = capitalize(searchBar.value)
+        if (!filtersArray.includes(searchString.toUpperCase())){
+          filtersArray.push(searchString.toUpperCase());
+          if (searchStringCheck === "frontend" ||
+              searchStringCheck === "backend" ||
+              searchStringCheck === "react" ||
+              searchStringCheck === "junior" ||
+              searchStringCheck === "senior" ||
+              searchStringCheck === "fullstack" ||
+              searchStringCheck === "python" || 
+              searchStringCheck === "midweight" || 
+              searchStringCheck === "sass" || 
+              searchStringCheck === "ruby" ||
+              searchStringCheck === "vue" ||
+              searchStringCheck === "django"
+            ){
+              addToFiltersDOM(capitalize(searchString))
+              updateDOM();
+            }
+          else if(searchStringCheck === "html" || searchStringCheck === "css"){
+            addToFiltersDOM(searchString.toUpperCase())
+            updateDOM();
+          }
+          else if(searchStringCheck === "javascript"){
+            addToFiltersDOM("JavaScript")
+            updateDOM();
+          }
+          else if(searchStringCheck === "ror"){
+            addToFiltersDOM("RoR")
+            updateDOM();
+          }
+        }
+        searchBar.value = ""
+  }
+})
+
+function capitalize(text){
+  const str = text
+  const str2 = str.charAt(0).toUpperCase() + str.slice(1);
+  return str2
+}
